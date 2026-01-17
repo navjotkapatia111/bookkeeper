@@ -19,7 +19,7 @@ app.get("/",(req,res)=>{
 })
 
 app.use('/book', router)
-app.use('/book/user',user_route)
+app.use('/user',user_route)
 const PORT=process.env.PORT
 if(process.env.NODE_ENV!=='production'){
     app.listen(PORT,()=>{
