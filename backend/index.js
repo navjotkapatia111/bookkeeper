@@ -14,11 +14,11 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(cors())
 
-app.get("/",(req,res)=>{
+app.get("/error",(req,res)=>{
     res.send("Error Occurred")
 })
 
-app.use('/book', router)
+app.use('/', router)
 app.use('/user',user_route)
 const PORT=process.env.PORT
 if(process.env.NODE_ENV!=='production'){
