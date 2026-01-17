@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { BaseUrl } from "../../axios.js";
+import { BaseUrl } from "../../../axios.js";
 import { MdDelete } from "react-icons/md";
 import { FaPen } from "react-icons/fa";
 import { toast } from "react-toastify";
-import LoadingSpinner from "./ui/LoadingSpinner.jsx";
+import LoadingSpinner from "../ui/LoadingSpinner.jsx";
+import Navbar from "./Navbar.jsx";
+import { useTheme } from "../context/themecontext.jsx";
 
 const Home = () => {
   const [bookform, setBookform] = useState({
@@ -16,6 +18,7 @@ const Home = () => {
   });
   const [booklist, setBooklist] = useState([]);
   const [isupdate, setIsupdate] = useState(false);
+  const {darkMode} = useTheme()
 
   const getList = async () => {
     try {
@@ -112,9 +115,12 @@ const Home = () => {
     getList();
   }, []);
   return (
-
+    <>
+    <Navbar/>
+    <nav className={`w-full shadow px-6 ${darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
+    }`} >
     <div className="w-full px-5 min-h-[calc(100vh-60px)]">
-      <div className="w-full grid grid-cols-5 gap-4 my-4">
+      <div className={"w-full grid grid-cols-5 gap-4 my-4"} >
         <div className="w-full flex flex-col gap-2">
           <label htmlFor="">Book Name</label>
           <input
@@ -187,8 +193,13 @@ const Home = () => {
 
       <div className="w-full mt-10">
         <div className="w-full">
-          <table className="w-full bg-white divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className={`w-full divide-y
+           ${darkMode ? "bg-gray-800 divide-gray-700 text-white" : 
+           "bg-white divide-gray-200 text-gray-900"}`}>
+
+            <thead className={`${ darkMode ? 
+            "bg-gray-700 text-gray-200" : "bg-gray-50 text-gray-600" }`}>
+
               <tr>
                 <th className="tracking-wider px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                   Book Name
@@ -211,11 +222,15 @@ const Home = () => {
               </tr>
             </thead>
 
-            <tbody className="w-full bg-white divide-y divide-gray-200">
-                {booklist.length===0&&<LoadingSpinner/>}
+            <tbody className={`divide-y ${
+              darkMode ? "bg-gray-800 divide-gray-700" : "bg-white divide-gray-200"}`}>
+
+                {booklist.length===0 && <LoadingSpinner table/>}
               {booklist?.map((book, index) => {
                 return (
-                  <tr className="hover:bg-gray-200" key={index}>
+
+                  <tr className={`${
+                    darkMode ? "hover:bg-gray-700" : "hover:bg-gray-200"}`} key={index}>
                     <td className="px-6 py-3 whitespace-nowrap">
                       {book?.bookname}{" "}
                     </td>
@@ -259,7 +274,10 @@ const Home = () => {
         </div>
       </div>
     </div>
+    </nav>
+    </>
   );
 };
+
 
 export default Home;

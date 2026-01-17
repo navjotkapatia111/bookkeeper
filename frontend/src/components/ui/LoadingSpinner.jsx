@@ -1,5 +1,5 @@
 import React from 'react'
-const LoadingSpinner = ({ size = "md", color = "blue" }) => {
+const LoadingSpinner = ({ size = "md", color = "blue", table = false }) => {
     const sizeClasses = {
       sm: "h-4 w-4 border-2",
       md: "h-8 w-8 border-4",
@@ -12,8 +12,7 @@ const LoadingSpinner = ({ size = "md", color = "blue" }) => {
       gray: "border-gray-500",
     };
   
-    return (
-      <div className="flex justify-center items-center min-w-screen  my-10">
+    const spinner = (
         <div
           className={`
             animate-spin rounded-full
@@ -22,9 +21,25 @@ const LoadingSpinner = ({ size = "md", color = "blue" }) => {
             ${colorClasses[color]}
           `}
         />
+    )
+
+    if (table) {
+      return (
+        <tr>
+          <td colSpan={6} className="py-10">
+            <div className="flex justify-center items-center">
+              {spinner}
+            </div>
+          </td>
+        </tr>
+      );
+    }
+    return (
+      <div className="flex justify-center items-center min-w-screen my-10">
+        {spinner}
       </div>
-    );
-  };
+    )
+  }
   
   export default LoadingSpinner;
   
